@@ -1,5 +1,12 @@
-#IFNDEF QUEUE_H
-#DEFINE QUEUE_H
+#ifndef QUEUE_H
+#define QUEUE_H
+
+#include <iostream>
+#include <stdexcept>
+
+class Queue{
+
+};
 
 
-#ENDIF
+#endif

@@ -1,8 +1,8 @@
-#IFNDEF HEALTHPOINTS_H
-#DEFINE HEALTHPOINTS_H
+#ifndef HEALTH_POINTS_H
+#define HEALTH_POINTS_H
 
 const int MINIMAL_HEALTH = 0;
-
+const int DEFAULT_MAXIMAL_HEALTH = 100;
 
 class HealthPoints {
     class InvalidHealth {};
@@ -14,10 +14,15 @@ class HealthPoints {
     /** Constructor*/
     /** @description Construct a new Health Points object
      *
-     * @param health
+     * @param maxHealth or no input
+     *
+     * @assumption maxHealth > 0
+     * @throw InvalidHealth otherwise
+     *
+     * @return HealthPoints object with maxHealth
      */
-    HealthPoints(int maxHealth = 100) : m_maxHealth(maxHealth), m_currentHealth(maxHealth) {
-        if(maxHealth <= 0){
+    HealthPoints(int maxHealth = DEFAULT_MAXIMAL_HEALTH) : m_maxHealth(maxHealth), m_currentHealth(maxHealth) {
+        if( maxHealth <= 0) {
             throw HealthPoints::InvalidHealth;
         }
     }
@@ -57,6 +62,11 @@ class HealthPoints {
         return *this;
     }
 
+    HealthPoints& operator=(const HealthPoints& other){
+        m_currentHealth = other.m_currentHealth;
+        return *this;
+    }
+
     HealthPoints& operator=(const int healthToAssign){
         m_currentHealth = healthToAssign;
         return *this;
@@ -75,11 +85,19 @@ class HealthPoints {
         return (m_currentHealth < other.m_currentHealth);
     }
 
+    bool operator<=(const HealthPoints& other) const {
+        return (m_currentHealth <= other.m_currentHealth);
+    }
+
     bool operator>(const HealthPoints& other) const {
         return (m_currentHealth > other.m_currentHealth);
     }
 
-    /**std::cout operetors*/
+    bool operator>=(const HealthPoints& other) const {
+        return (m_currentHealth >= other.m_currentHealth);
+    }
+
+    /** std::cout operators */
     friend std::ostream& operator<<(std::ostream& os, const HealthPoints& healthPoints) {
         os << healthPoints.m_currentHealth << "(" << healthPoints.m_maxHealth << ")";
         return os;
@@ -103,8 +121,8 @@ class HealthPoints {
     }
 
     bool isAlive() const {
-        return (m_currentHealth > 0);
+        return (m_currentHealth > MINIMAL_HEALTH);
     }
-}
+};
 
-#ENDIF
+#endif
