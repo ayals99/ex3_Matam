@@ -1,0 +1,3 @@
+C:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/cmake-build-debug/CMakeFiles/ex3_Matam.dir
+C:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/cmake-build-debug/CMakeFiles/rebuild_cache.dir
