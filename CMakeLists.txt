@@ -3,4 +3,4 @@ project(ex3_Matam)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ex3_Matam main.cpp HealthPoints.cpp)
+add_executable(ex3_Matam main.cpp HealthPoints.cpp Queue.cpp Node.cpp)
