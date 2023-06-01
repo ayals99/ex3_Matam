@@ -49,8 +49,6 @@ void runTheirTests(){
 }
 
 
-
-
 namespace HealthPointsTests {
 
     static bool checkHealthPointsValues(const HealthPoints& healthPoints, int current, int max)
