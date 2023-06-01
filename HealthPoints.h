@@ -1,15 +1,18 @@
 #ifndef HEALTH_POINTS_H
 #define HEALTH_POINTS_H
 
+#include <iostream>
 const int MINIMAL_HEALTH = 0;
 const int DEFAULT_MAXIMAL_HEALTH = 100;
 
 class HealthPoints {
-    class InvalidHealth {};
-    private:
-        int m_maxHealth;
-        int m_currentHealth;
-    public:
+
+private:
+    int m_maxHealth;
+    int m_currentHealth;
+
+public:
+    class InvalidArgument{};
 
     /** Constructor*/
     /** @description Construct a new Health Points object
@@ -22,13 +25,16 @@ class HealthPoints {
      * @return HealthPoints object with maxHealth
      */
     HealthPoints(int maxHealth = DEFAULT_MAXIMAL_HEALTH) : m_maxHealth(maxHealth), m_currentHealth(maxHealth) {
-        if( maxHealth <= 0) {
-            throw HealthPoints::InvalidHealth;
+        if (maxHealth <= MINIMAL_HEALTH) {
+            throw InvalidArgument();
         }
     }
 
     /** copy constructor */
-    HealthPoints(const HealthPoints& other) : m_maxHealth(other.m_maxHealth), m_currentHealth(other.m_currentHealth) {}
+    HealthPoints(const HealthPoints& other){
+        m_maxHealth = other.m_maxHealth;
+        m_currentHealth = other.m_currentHealth;
+    }
 
     /**
      * @description Destroy the Health Points object
@@ -36,93 +42,76 @@ class HealthPoints {
      */
     ~HealthPoints() = default;
 
-    /** Arithmetic Operators */
-    HealthPoints& operator+(const HealthPoints& other){
-        this->m_currentHealth += other.m_currentHealth;
-        return *this;
-    }
+/** Arithmetic Operators implementation*/
 
-    HealthPoints& operator+(int pointsToAdd){
-        this->m_currentHealth += pointsToAdd;
-        return *this;
-    }
+/** Implementing + operator */
+    HealthPoints& operator+(const HealthPoints& other);
+    HealthPoints& operator+(int pointsToAdd);
+    friend HealthPoints& operator+(int pointsToSub, HealthPoints& healthPoints);
 
-    HealthPoints& operator-(int pointsToSub){
-        this->m_currentHealth -= pointsToSub;
-        return *this;
-    }
+/** Implementing += operator */
+    HealthPoints& operator+=(HealthPoints& other);
+    HealthPoints& operator+=(int valueToIncrease);
 
-    HealthPoints& operator+=(HealthPoints& other){
-        m_currentHealth += other.m_currentHealth;
-        return *this;
-    }
+/** Implementing - operator */
+    HealthPoints& operator-(const HealthPoints& other);
+    HealthPoints& operator-(int pointsToSubtract);
 
-    HealthPoints& operator-=(HealthPoints& other){
-        m_currentHealth -= other.m_currentHealth;
-        return *this;
-    }
+/** Implementing -= operator */
+    HealthPoints& operator-=(HealthPoints& other);
+    HealthPoints& operator-=(int valueToDecrease);
 
-    HealthPoints& operator=(const HealthPoints& other){
-        m_currentHealth = other.m_currentHealth;
-        return *this;
-    }
+/** Assignment Operators implementation*/
+    HealthPoints& operator=(const HealthPoints& other);
+    HealthPoints& operator=(int healthToAssign);
 
-    HealthPoints& operator=(const int healthToAssign){
-        m_currentHealth = healthToAssign;
-        return *this;
-    }
+/** Boolean Operators implementation*/
 
-    /** Boolean Operators */
-    bool operator==(const HealthPoints& other) const {
-        return m_currentHealth == other.m_currentHealth;
-    }
+/** Declaring == operator */
+    bool operator==(const HealthPoints& other) const;
+    bool operator==(int value) const;
+    friend bool operator==(int value, const HealthPoints& healthPoints);
 
-    bool operator!=(const HealthPoints& other) const {
-        return (m_currentHealth != other.m_currentHealth);
-    }
+/** Declaring != operator */
+    bool operator!=(const HealthPoints& other) const;
+    bool operator!=(int value) const;
+    friend bool operator!=(int value, const HealthPoints& healthPoints);
 
-    bool operator<(const HealthPoints& other) const {
-        return (m_currentHealth < other.m_currentHealth);
-    }
+/** Declaring < operator */
+    bool operator<(const HealthPoints& other) const;
+    friend bool operator<(int number, const HealthPoints& healthPoints);
 
-    bool operator<=(const HealthPoints& other) const {
-        return (m_currentHealth <= other.m_currentHealth);
-    }
+/** Declaring > operator */
+    bool operator>(const HealthPoints& other) const;
+    friend bool operator>(int number, const HealthPoints& healthPoints);
 
-    bool operator>(const HealthPoints& other) const {
-        return (m_currentHealth > other.m_currentHealth);
-    }
+/** Declaring <= operator */
+    bool operator<=(const HealthPoints& other) const;
+    friend bool operator<=(int number, const HealthPoints& healthPoints);
 
-    bool operator>=(const HealthPoints& other) const {
-        return (m_currentHealth >= other.m_currentHealth);
-    }
+/** Declaring >= operator */
+    bool operator>=(const HealthPoints& other) const;
+    friend bool operator>=(int number, const HealthPoints& other);
 
-    /** std::cout operators */
-    friend std::ostream& operator<<(std::ostream& os, const HealthPoints& healthPoints) {
-        os << healthPoints.m_currentHealth << "(" << healthPoints.m_maxHealth << ")";
-        return os;
-    }
 
-    /**Getters and setters for health points*/
-    int getHealth() const {
-        return m_currentHealth;
-    }
-
-    void setHealth(int health){
-        this->m_currentHealth = health;
-    }
-
-    void addHealth(int healthToAdd){
-        this->m_currentHealth += healthToAdd;
-    }
-
-    void subtractHealth(int healthToSubtract){
-        this->m_currentHealth -= healthToSubtract;
-    }
-
-    bool isAlive() const {
-        return (m_currentHealth > MINIMAL_HEALTH);
-    }
+/** Friending << operator */
+    friend std::ostream& operator<<(std::ostream& os, const HealthPoints& healthPoints);
 };
+
+HealthPoints& operator+(int, HealthPoints&);
+
+bool operator==(int value, const HealthPoints& healthPoints);
+
+bool operator!=(int,const HealthPoints&);
+
+bool operator<(int, const HealthPoints&);
+
+bool operator<=(int, const HealthPoints&);
+
+bool operator>(int, const HealthPoints&);
+
+bool operator>=(int, const HealthPoints&);
+
+std::ostream &operator<<(std::ostream& os, const HealthPoints& healthPoints);
 
 #endif
