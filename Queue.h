@@ -22,6 +22,19 @@ public:
      */
     Queue(): m_head(), m_size(EMPTY){}
 
+    /**
+     * @brief: Copy Constructor for Queue
+     * @param: other queue to copy
+     * @return: A new queue with the same items as the "other" queue
+     */
+    Queue(const Queue& other): m_head(), m_size(EMPTY) {
+        queueNode *current = other.m_head;
+        while (current != nullptr) {
+            push(current->m_item);
+            current = getNext(current);
+        }
+    }
+
     class EmptyQueue{};
 
     class iterator{
@@ -83,12 +96,12 @@ public:
         return iterator(m_head);
     }
 
-//    iterator end(){ // TODO: Need to return a reference to the one after last element in the queue
-//        return iterator(m_head) + m_size;
-//    }
-//    const iterator end() const{
-//        return iterator(m_head) + m_size;
-//    }
+    /**
+     * @return reference to the one after the last element of the queue
+     */
+    iterator end(){
+        return iterator(m_head) + m_size;
+    }
 
     /**
      * @param: item to insert to the
@@ -111,6 +124,9 @@ public:
      * @return reference to first element of the queue
      */
     T front(const Queue& queue) const{
+        if(m_size == EMPTY){
+            throw EmptyQueue();
+        }
         return queueNode::nodeGetItem(m_head);
     }
 
@@ -145,11 +161,8 @@ public:
     }
 
     void transform(Queue& queue, void (*transformFunc)(T&)){
-        queueNode currentNode = m_head;
-        while(currentNode != nullptr){
-            T& item = getItem(currentNode);
-            transformFunc(item);
-            currentNode = getNext(currentNode);
+        for(auto queueIterator:queue){
+            transformFunc(nodeGetItem(*queueIterator));
         }
     }
 

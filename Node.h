@@ -3,13 +3,12 @@
 
 
 template<class S>
-class Node{
-    typedef Node& NodePtr;
+class Node {
+    typedef Node &NodePtr;
 
 private:
-    S& m_item;
+    S &m_item;
     NodePtr m_next;
-    NodePtr m_previous;
 
 public:
     /**
@@ -17,7 +16,7 @@ public:
      * @param: node
      * @return: item of the node
      */
-    Node():m_item(nullptr), m_next(nullptr), m_previous(nullptr){}
+    Node() : m_item(nullptr), m_next(nullptr), m_previous(nullptr) {}
 
     /**
      * @description: Constructor for Node
@@ -25,7 +24,7 @@ public:
      * @note: the item is copied, not inserted itself into the node
      * @return: Node
      */
-    explicit Node(S* item): m_next(nullptr), m_previous(nullptr){
+    explicit Node(S *item) : m_next(nullptr), m_previous(nullptr) {
         m_item = new S(*item);
     }
 
@@ -34,7 +33,7 @@ public:
      * @param: other node to copy
      * @return: Node
      */
-    Node(const Node& other){
+    Node(const Node &other) {
         this->m_item = new S(*nodeGetItem(other));
         this->m_next = getNext(other);
         this->m_previous = getPrevious(other);
@@ -56,7 +55,7 @@ public:
      * @param: node
      * @return: item of the node
      */
-    S& nodeGetItem(NodePtr node) const {
+    S &nodeGetItem(NodePtr node) const {
         return m_item;
     }
 
@@ -66,10 +65,18 @@ public:
      * @return: next node
      */
     NodePtr getNext(NodePtr node) const {
-        return m_next;
+        return node.m_next;
     }
+
+//    /**
+//     * @description: Getter for the next node
+//     * @param: node
+//     * @return: next node
+//     */
+//    NodePtr& getNextPointer(NodePtr node) const {
+//        return &node.m_next;
+//    };
+
 };
-
-
 
 #endif
