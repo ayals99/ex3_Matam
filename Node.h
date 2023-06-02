@@ -1,13 +1,12 @@
 #ifndef EX3_MATAM_NODE_H
 #define EX3_MATAM_NODE_H
 
-
 template<class S>
 class Node {
-    typedef Node &NodePtr;
+    typedef Node<S>* NodePtr;
 
 private:
-    S &m_item;
+    S* m_item;
     NodePtr m_next;
 
 public:
@@ -16,7 +15,7 @@ public:
      * @param: node
      * @return: item of the node
      */
-    Node() : m_item(nullptr), m_next(nullptr), m_previous(nullptr) {}
+    Node() : m_item(nullptr), m_next(nullptr) {}
 
     /**
      * @description: Constructor for Node
@@ -24,8 +23,8 @@ public:
      * @note: the item is copied, not inserted itself into the node
      * @return: Node
      */
-    explicit Node(S *item) : m_next(nullptr), m_previous(nullptr) {
-        m_item = new S(*item);
+    explicit Node(S item = nullptr) : m_next(nullptr) {
+        m_item = new S(item);
     }
 
     /**
@@ -55,7 +54,7 @@ public:
      * @param: node
      * @return: item of the node
      */
-    S &nodeGetItem(NodePtr node) const {
+    S& nodeGetItem(NodePtr node) const {
         return m_item;
     }
 
