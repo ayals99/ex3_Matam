@@ -1,10 +1,11 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "Node.h"
 #include <iostream>
+#include "Node.h"
 
-static int EMPTY = 0;
+
+static const int EMPTY = 0;
 
 template<class T>
 class Queue{
@@ -19,7 +20,9 @@ public:
     /**
      * @brief: Constructor for Queue
      */
-    Queue(): m_head(EMPTY), m_size(0){}
+    Queue(): m_head(), m_size(EMPTY){}
+
+    class EmptyQueue{};
 
     class iterator{
         class InvalidOperation{};
@@ -80,12 +83,12 @@ public:
         return iterator(m_head);
     }
 
-    iterator end(){
-        return iterator(m_head) + m_size;
-    }
-    const iterator end() const{
-        return iterator(m_head) + m_size;
-    }
+//    iterator end(){ // TODO: Need to return a reference to the one after last element in the queue
+//        return iterator(m_head) + m_size;
+//    }
+//    const iterator end() const{
+//        return iterator(m_head) + m_size;
+//    }
 
     /**
      * @param: item to insert to the
@@ -97,7 +100,7 @@ public:
     Queue& pushBack(const T toInsert){
         queueNode nodeToPush = new queueNode(toInsert);
         queueNode lastElement = findLast(m_head);
-        insertAfter(nodeToPush, lastElement);
+        insertAfter(nodeToPush, lastElement); //TODO: write insertAfter
         m_size++;
         return *this;
     }
@@ -107,8 +110,8 @@ public:
      *
      * @return reference to first element of the queue
      */
-    queueNode front(const Queue& queue) const{
-        return m_head;
+    T front(const Queue& queue) const{
+        return queueNode::nodeGetItem(m_head);
     }
 
     /**
@@ -119,7 +122,10 @@ public:
      * @return none
      */
     void popFront(Queue& queue){
-        queueNode firstElement = front(queue);
+        queueNode firstElement = queue.m_head;
+        if(firstElement == nullptr){
+            throw EmptyQueue();
+        }
         m_head = getNext(firstElement);
         delete firstElement;
         m_size--;

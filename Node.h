@@ -35,7 +35,7 @@ public:
      * @return: Node
      */
     Node(const Node& other){
-        this->m_item = new S(*getItem(other));
+        this->m_item = new S(*nodeGetItem(other));
         this->m_next = getNext(other);
         this->m_previous = getPrevious(other);
     }
@@ -56,7 +56,7 @@ public:
      * @param: node
      * @return: item of the node
      */
-    S& getItem(NodePtr node) const {
+    S& nodeGetItem(NodePtr node) const {
         return m_item;
     }
 
