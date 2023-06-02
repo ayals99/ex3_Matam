@@ -15,12 +15,14 @@ private:
     int m_size;
 
 public:
+
     /**
      * @brief: Constructor for Queue
      */
     Queue(): m_head(EMPTY), m_size(0){}
 
     class iterator{
+        class InvalidOperation{};
 
     private:
         queueNode* m_pointer;
@@ -28,16 +30,23 @@ public:
 
     public:
         queueNode* operator*() const {
+            if(*this == nullptr){
+                throw InvalidOperation();
+            }
             return *m_pointer;
         }
 
         queueNode* operator++() const{
-            assert(*this == nullptr);
+            if(*this == nullptr){
+                throw InvalidOperation();
+            }
             return getNext(m_pointer);;
         }
 
         queueNode* operator++(int) const {
-            assert(*this == nullptr);
+            if(*this == nullptr){
+                throw InvalidOperation();
+            }
             return getNext(m_pointer);;
         }
 
@@ -48,8 +57,35 @@ public:
         bool operator!=(const iterator& other) const {
             return m_pointer != other.m_pointer;
         }
-        //TODO: iterator needs to be finished
+
+        iterator& operator+(int valueToIncrement){
+            queueNode current = *this;
+            if(valueToIncrement < 0){
+                throw InvalidOperation();
+            }
+            while(current != nullptr && valueToIncrement > 0){
+                *this = current;
+                current = getNext(current);
+                valueToIncrement -= 1;
+            }
+            return *this;
+        }
+
     };
+
+    iterator begin(){
+        return iterator(m_head);
+    }
+    const iterator begin() const{
+        return iterator(m_head);
+    }
+
+    iterator end(){
+        return iterator(m_head) + m_size;
+    }
+    const iterator end() const{
+        return iterator(m_head) + m_size;
+    }
 
     /**
      * @param: item to insert to the
@@ -110,6 +146,21 @@ public:
             currentNode = getNext(currentNode);
         }
     }
+
+    void printQueue(const Queue queue) const{
+        queueNode currentNode = m_head;
+        assert(queue == nullptr);
+        if(front(queue) == nullptr){
+            std::cout << "Queue is empty\n";
+            return;
+        }
+        std::cout << "Queue: ";
+        for (const auto &item: queue){
+            std::cout << item << " ";
+        }
+        std::cout << "\n";
+    }
+
 };
 
 
