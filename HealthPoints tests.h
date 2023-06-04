@@ -19,29 +19,29 @@ namespace HealthPointsTests {
 void runTheirTestsForHP(){
     bool initialization = HealthPointsTests::testInitialization();
     if(!initialization) {
-        std::cout << "Their tests initialization failed" << std::endl;
+        std::cout << "HealthPoints: Their tests initialization failed" << std::endl;
         return;
     }
 
     bool arithmetic = HealthPointsTests::testArithmaticOperators();
     if(!arithmetic) {
-        std::cout << "Their tests arithmetic failed" << std::endl;
+        std::cout << "HealthPoints: Their tests arithmetic failed" << std::endl;
         return;
     }
 
     bool comparison = HealthPointsTests::testComparisonOperators();
     if(!comparison) {
-        std::cout << "Their tests comparison failed" << std::endl;
+        std::cout << "HealthPoints: Their tests comparison failed" << std::endl;
         return;
     }
 
     bool output = HealthPointsTests::testOutputOperator();
     if(!output) {
-        std::cout << "Their tests output failed" << std::endl;
+        std::cout << "HealthPoints: Their tests output failed" << std::endl;
         return;
     }
 
-    std::cout << "All Their tests passed" << std::endl;
+    std::cout << "HealthPoints: their tests passed" << std::endl;
 }
 
 
@@ -150,7 +150,7 @@ void runMyTestsForHP(){
     HealthPoints healthPoints(150); /* has 150 points out of 150 */
 
     if(healthPoints != 150){
-        std::cout << "The constructor doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The constructor doesn't work well" << std::endl;
         return;
     }
 
@@ -168,110 +168,110 @@ void runMyTestsForHP(){
 
     HealthPoints healthPointsDouble(10.5);
     if(healthPointsDouble != 10){
-        std::cout << "The constructor with double doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The constructor with double doesn't work well" << std::endl;
         return;
     }
 
     HealthPoints healthPointsChar('a');
     if(healthPointsDouble == (int)'a'){
-        std::cout << "The constructor with char doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The constructor with char doesn't work well" << std::endl;
         return;
     }
 
     healthPoints1 -= 20; /* now has 80 points out of 100 */
     if(healthPoints1 != 80){
-        std::cout << "The -= operator doesn't work well first time" << std::endl;
+        std::cout << "HealthPoints: The -= operator doesn't work well first time" << std::endl;
         return;
     }
 
     healthPoints1 +=100; /* now has 100 points out of 100 */
     if(healthPoints1 != 100){
-        std::cout << "The += operator doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The += operator doesn't work well" << std::endl;
         return;
     }
 
     healthPoints1 -= 150; /* now has 0 points out of 100 */
     if(healthPoints1 != 0){
-        std::cout << "The -= operator doesn't work well second time" << std::endl;
+        std::cout << "HealthPoints: The -= operator doesn't work well second time" << std::endl;
         return;
     }
 
     HealthPoints healthPoints2;
     healthPoints2 = healthPoints2 - 160; /* now has 0 points out of 150 */
     if(healthPoints2 != 0){
-        std::cout << "The -= operator doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The -= operator doesn't work well" << std::endl;
         return;
     }
 
     healthPoints2 = 160 + healthPoints2; /* now has 100 out of 100 */
     if(healthPoints2 != 100){
-        std::cout << "The += operator doesn't work well for 160" << std::endl;
+        std::cout << "HealthPoints: The += operator doesn't work well for 160" << std::endl;
         return ;
     }
 
     bool comparisonResult;
     HealthPoints healthPoints3(100);
     if(healthPoints3 != 100){
-        std::cout << "The constructor with int doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The constructor with int doesn't work well" << std::endl;
         return ;
     }
 
     HealthPoints healthPoints4 = 100; /* 100 points out of 100 */
 
     if(healthPoints4 != 100){
-        std::cout << "The assignment operator from int doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The assignment operator from int doesn't work well" << std::endl;
         return ;
     }
 
     comparisonResult = (healthPoints3 == healthPoints4); /* returns true */
     if(!comparisonResult){
-        std::cout << "The == operator doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The == operator doesn't work well" << std::endl;
         return ;
     }
 
     healthPoints4 = HealthPoints(150); /* has 150 points out of 150 */
     if (healthPoints4 != 150){
-        std::cout << "The assignment operator from constructor doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The assignment operator from constructor doesn't work well" << std::endl;
         return ;
     }
 
     comparisonResult = (healthPoints3 == healthPoints4); /* returns false */
     if(comparisonResult){
-        std::cout << "The == operator doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The == operator doesn't work well" << std::endl;
         return ;
     }
 
     healthPoints4 -= 50; /* now has 100 points out of 150 */
     if(healthPoints4 != 100){
-        std::cout << "The -= operator doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The -= operator doesn't work well" << std::endl;
         return ;
     }
 
     comparisonResult = (100 == healthPoints4); /* returns true */
     if(!comparisonResult){
-        std::cout << "The == operator doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The == operator doesn't work well" << std::endl;
         return ;
     }
 
     comparisonResult = (healthPoints3 < healthPoints4); /* returns false */
     if(comparisonResult){
-        std::cout << "The < operator doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The < operator doesn't work well" << std::endl;
         return ;
     }
 
     healthPoints3 -= 50; /* now has 50 points out of 100 */
     if(healthPoints3 != 50){
-        std::cout << "The -= operator doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The -= operator doesn't work well" << std::endl;
         return ;
     }
 
     comparisonResult = (healthPoints3 < healthPoints4); /* returns true */
     if(!comparisonResult){
-        std::cout << "The < operator doesn't work well" << std::endl;
+        std::cout << "HealthPoints: The < operator doesn't work well" << std::endl;
         return ;
     }
 
-    std::cout << "All of my tests passed!" << std::endl;
+    std::cout << "HealthPoints: my tests passed!" << std::endl;
 }
 
 

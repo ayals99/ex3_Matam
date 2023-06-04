@@ -2,9 +2,10 @@
 #define EX3_MATAM_QUEUE_TESTS_H
 #define AGREGATE_TEST_RESULT(res, cond) (res) = ((res) && (cond))
 #include "Queue.h"
-
+#include <iostream>
 
 void runMyTestsForQueue();
+
 void runTheirTestsForQueue();
 namespace theirQueueTests{
     bool testQueueMethods();
@@ -14,15 +15,37 @@ namespace theirQueueTests{
 }
 
 namespace myQueueTests{
-    bool testQueueMethods();
-    bool testModuleFunctions();
-    bool testExceptions();
-    bool testConstQueue();
+    bool testQueueConstructor(){
+        Queue<int> queue1;
+        queue1.pushBack(1);
+        queue1.pushBack(2);
+        std::cout << queue1.size() << std::endl;
+        if(queue1.front() != 1){
+            return false;
+        }
+        queue1.popFront();
+        if(queue1.front() != 2){
+            return false;
+        }
+        queue1.popFront();
+        std::cout << queue1.size() << std::endl;
+        return true;
+    }
+
+    bool testModuleFunctions(){
+        return true;
+    }
+    bool testExceptions(){
+        return true;
+    }
+    bool testConstQueue(){
+        return true;
+    }
 }
 
 void runMyTestsForQueue(){
-    bool methodsResult = myQueueTests::testQueueMethods();
-    if(!methodsResult){
+    bool constructorResults = myQueueTests::testQueueConstructor();
+    if(!constructorResults){
         std::cout << "Their tests methods failed" << std::endl;
         return;
     }
@@ -41,7 +64,7 @@ void runMyTestsForQueue(){
         std::cout << "Their tests const queue failed" << std::endl;
         return;
     }
-    std::cout << "Their tests passed" << std::endl;
+    std::cout << "My tests passed" << std::endl;
 }
 
 
@@ -177,7 +200,7 @@ namespace theirQueueTests {
             queue5.pushBack(42);
         }
         const Queue<int> constQueue = queue5;
-        for (Queue<int>::ConstIterator i = constQueue.begin(); i != constQueue.end(); ++i) {
+        for (Queue<int>::ConstIterator i = constQueue.begin(); static_cast<Queue<int>::ConstIterator>(i) != constQueue.end(); ++i) {
             AGREGATE_TEST_RESULT(testResult, (*i == 42));
         }
 

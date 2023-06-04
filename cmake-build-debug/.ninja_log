@@ -1,8 +1,13 @@
 # ninja log v5
-0	162	7074233141918486	build.ninja	77d5075ed6ee6f11
+1	208	7076020824534513	build.ninja	77d5075ed6ee6f11
 6	596	7073183814443934	CMakeFiles/ex3_Matam.dir/ex3_master_from_github/TestMain.cpp.obj	de05e06c239e6110
-2	238	7074078856028497	CMakeFiles/ex3_Matam.dir/HealthPoints.cpp.obj	52a1cead3fb36ddf
-238	317	7074078856798906	ex3_Matam.exe	ced4bbb12ce9616b
-2	344	7074078558140326	CMakeFiles/ex3_Matam.dir/main.cpp.obj	e6a8bcdd936a2a09
+248	370	7076020327976129	ex3_Matam.exe	2219d69d91a4c4fd
+2	248	7076020326812345	CMakeFiles/ex3_Matam.dir/HealthPoints.cpp.obj	52a1cead3fb36ddf
+3	252	7076018268852696	CMakeFiles/ex3_Matam.dir/main.cpp.obj	e6a8bcdd936a2a09
+7	310	7075949431230979	CMakeFiles/ex3_Matam.dir/Node.cpp.obj	23002b25f801155c
 13	587	7074069995713744	CMakeFiles/ex3_Matam.dir/Queue.cpp.obj	9fe14c1bb35f8ea2
-20	153	7074069991366095	CMakeFiles/ex3_Matam.dir/Node.cpp.obj	23002b25f801155c
+4	333	7076019618329361	CMakeFiles/ex3_Matam.dir/HealthPointsExampleTest.cpp.obj	b4f333fdba6a0b40
+4	377	7076019824717720	CMakeFiles/ex3_Matam.dir/QueueExampleTests.cpp.obj	7096e7ca4c07a710
+9	320	7076042465414042	CMakeFiles/ex3_Matam.dir/QueueExampleTests.cpp.obj	7096e7ca4c07a710
+2	354	7076042465773670	CMakeFiles/ex3_Matam.dir/main.cpp.obj	e6a8bcdd936a2a09
+354	468	7076042466813358	ex3_Matam.exe	2219d69d91a4c4fd

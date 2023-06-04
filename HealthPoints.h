@@ -47,7 +47,6 @@ public:
     /** Implementing + operator */
 //    HealthPoints& operator+(const HealthPoints& other);
     HealthPoints& operator+(int pointsToAdd);
-    friend HealthPoints& operator+(int pointsToSub, HealthPoints& healthPoints);
 
     /** Implementing += operator */
 //    HealthPoints& operator+=(HealthPoints& other);
@@ -98,7 +97,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const HealthPoints& healthPoints);
 };
 
-HealthPoints& operator+(int, HealthPoints&);
+HealthPoints& operator+(int pointsToSub, HealthPoints& healthPoints);
 
 bool operator==(int value, const HealthPoints& healthPoints);
 
