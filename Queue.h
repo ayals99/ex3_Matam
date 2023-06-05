@@ -56,7 +56,9 @@ private:
          * @description: Destructor for Node, deletes the item
          */
         ~Node() {
-            delete m_item;
+            if(m_item != nullptr) {
+                delete m_item;
+            }
         }
 
         /** Getters */
@@ -104,8 +106,9 @@ public:
      * @param: other queue to copy
      * @return: A new queue with the same items as the "other" queue
      */
+    // TODO: Write a test that creates two queues, changes one and checks that the other one didn't change
     Queue(const Queue &other) : m_head(), m_size(EMPTY) {
-        Node *current = other.m_head;
+        Node* current = other.m_head; // TODO: check if need to add new Node(other.m_head)
         while (current != nullptr) {
             pushBack(current->getReferenceToItem());
             current = current->getPointerToNext();
@@ -114,8 +117,8 @@ public:
 
     class ConstIterator {
     private:
-        Node *m_pointer;
-        friend class Queue<T>;
+        Node *m_pointer; // TODO: Check if const is needed
+        friend class Queue<T>; // TODO: Check if this is needed
     public:
         explicit ConstIterator(Node *pointer) {
             m_pointer = pointer;
@@ -128,29 +131,28 @@ public:
          * @param: *
          * @return: pointer to the node
          */
-        const T &operator*() const {
+        const T& operator*() const {
             if (this->m_pointer == nullptr) {
                 throw InvalidOperation();
             }
             return m_pointer->getReferenceToItem();
         }
 
-        const ConstIterator& operator++() {
+        void operator++() { // TODO: Check if const is needed after
             if (this->m_pointer == nullptr) {
                 throw InvalidOperation();
             }
             m_pointer = m_pointer->getPointerToNext();
-            return *this;
         }
 
-        const ConstIterator& operator++(int) const {
-            if (this->m_pointer == nullptr) {
-                throw InvalidOperation();
-            }
-            ConstIterator tempIterator(m_pointer);
-            m_pointer = m_pointer->getPointerToNext();
-            return tempIterator;
-        }
+        // TODO: Check if ++ from the right is needed
+//        ConstIterator operator++(int) { // TODO: Check what return value should be
+//            if (this->m_pointer == nullptr) {
+//                throw InvalidOperation();
+//            }
+//            ConstIterator tempIterator(m_pointer);
+//            m_pointer = m_pointer->getPointerToNext();
+//        }
 
         bool operator==(const ConstIterator &other) const {
             return m_pointer == other.m_pointer;
@@ -160,7 +162,7 @@ public:
             return m_pointer != other.m_pointer;
         }
 
-        ConstIterator &operator+(int valueToIncrement) const{
+        ConstIterator& operator+(int valueToIncrement) const{
             Node *current = this->m_pointer;
             if (valueToIncrement < 0) {
                 throw InvalidOperation();
@@ -177,8 +179,7 @@ public:
     class Iterator {
     private:
         Node *m_pointer;
-
-        friend class Queue<T>;
+        friend class Queue<T>; // TODO: Check if this is needed
 
     public:
         explicit Iterator(Node *pointer) {
@@ -193,7 +194,7 @@ public:
          * @param: *
          * @return: pointer to the node
          */
-        T &operator*() const {
+        T& operator*() {
             if (this->m_pointer == nullptr) {
                 throw InvalidOperation();
             }
@@ -208,15 +209,15 @@ public:
             return *this;
         }
 
-        Iterator& operator++(int)  {
-            if (this->m_pointer == nullptr) {
-                throw InvalidOperation();
-            }
-            Iterator tempIterator(m_pointer);
-            m_pointer = m_pointer->getPointerToNext();
-            return &tempIterator;
-        }
-
+        // TODO: Check if ++ from the right is needed
+//        Iterator& operator++(int)  {
+//            if (this->m_pointer == nullptr) {
+//                throw InvalidOperation();
+//            }
+//            Iterator tempIterator(m_pointer);
+//            m_pointer = m_pointer->getPointerToNext();
+//            return &tempIterator;
+//        }
 
         bool operator==(const Iterator &other) const {
             return m_pointer == other.m_pointer;
@@ -245,7 +246,7 @@ public:
         return Iterator(m_head);
     }
 
-    const ConstIterator begin() const {
+    ConstIterator begin() const { // TODO: CHeck if const can be removed
         return ConstIterator(m_head);
     }
 
@@ -256,7 +257,7 @@ public:
         return Iterator(nullptr);
     }
 
-    const ConstIterator end() const {
+    ConstIterator end() const { // TODO: CHeck if const can be removed
         return ConstIterator(nullptr);
     }
 
@@ -302,6 +303,14 @@ public:
      *
      * @return reference to first element of the queue
      */
+    const T& front() const{
+        if (m_size == EMPTY) {
+            throw EmptyQueue();
+        }
+        T& itemPointer = m_head->Node::getReferenceToItem();
+        return itemPointer;
+    }
+
     T& front() {
         if (m_size == EMPTY) {
             throw EmptyQueue();
@@ -328,11 +337,11 @@ public:
     }
 
     /**
-         * @param: queue
-         *
-         * @return number of elements in the queue
-         */
-    int size() {
+     * @param: queue
+     *
+     * @return number of elements in the queue
+     */
+    int size() const{
         return m_size;
     }
 };
@@ -341,9 +350,9 @@ template<class T>
 std::ostream &operator<<(std::ostream &os, Queue<T> queue);
 
 template<typename T, typename FUNC >
-Queue<T> filter(Queue<T>& queue, FUNC filterFunction) {
+Queue<T> filter(const Queue<T>& queueToFilter, FUNC filterFunction) {
     Queue<T> newFilteredQueue;
-    for (typename Queue<T>::Iterator i = queue.begin(); i != queue.end(); ++i){
+    for (typename Queue<T>::Iterator i = queueToFilter.begin(); i != queueToFilter.end(); ++i){
         if(filterFunction(*i) == true){
             newFilteredQueue.pushBack(*i);
         }
@@ -352,8 +361,8 @@ Queue<T> filter(Queue<T>& queue, FUNC filterFunction) {
 }
 
 template<typename T, typename FUNC >
-void transform(Queue<T>& queue, FUNC transformFunction) {
-    for (typename Queue<T>::Iterator i = queue.begin(); i != queue.end(); ++i) {
+void transform(Queue<T>& queueToTransform, FUNC transformFunction) {
+    for (typename Queue<T>::Iterator i = queueToTransform.begin(); i != queueToTransform.end(); ++i) {
         T& itemPointer = *i;
         transformFunction(itemPointer);
     }
