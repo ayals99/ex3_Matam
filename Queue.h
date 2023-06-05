@@ -352,7 +352,7 @@ std::ostream &operator<<(std::ostream &os, Queue<T> queue);
 template<typename T, typename FUNC >
 Queue<T> filter(const Queue<T>& queueToFilter, FUNC filterFunction) {
     Queue<T> newFilteredQueue;
-    for (typename Queue<T>::Iterator i = queueToFilter.begin(); i != queueToFilter.end(); ++i){
+    for (typename Queue<T>::ConstIterator i = queueToFilter.begin(); i != queueToFilter.end(); ++i){
         if(filterFunction(*i) == true){
             newFilteredQueue.pushBack(*i);
         }
