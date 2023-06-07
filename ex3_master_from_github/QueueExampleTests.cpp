@@ -1,5 +1,5 @@
 
-#include "Queue.h"
+#include "../UnitTests/Queue.h"
 #include "iostream"
 
 #define AGREGATE_TEST_RESULT(res, cond) (res) = ((res) && (cond))

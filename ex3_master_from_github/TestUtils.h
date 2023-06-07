@@ -1,7 +1,6 @@
 
 #include <functional>
 #include <iostream>
-
 void runTest(std::function<bool()> testFunction, std::string testName)
 {
 	if(!testFunction()){

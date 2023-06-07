@@ -1,7 +1,7 @@
 #ifndef EX3_MATAM_QUEUE_TESTS_H
 #define EX3_MATAM_QUEUE_TESTS_H
 #define AGREGATE_TEST_RESULT(res, cond) (res) = ((res) && (cond))
-#include "Queue.h"
+#include "../UnitTests/Queue.h"
 #include <iostream>
 
 void runMyTestsForQueue();

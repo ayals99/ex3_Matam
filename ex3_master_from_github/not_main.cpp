@@ -10,15 +10,15 @@
 //    runTheirTestsForHP();
 //    runMyTestsForHP();
 //    runTest();
-////    runTheirTestsForQueue();
+//    runTheirTestsForQueue();
 //    runMyTestsForQueue();
 //    return 0;
 //}
 
 
 #include "TestUtils.h"
-#include "HealthPoints.h"
-#include "Queue.h"
+#include "../UnitTests/HealthPoints.h"
+#include "../UnitTests/Queue.h"
 
 namespace HealthPointsTests {
     bool testInitialization();
@@ -71,12 +71,6 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
-
-
-
-
-
-
 
 
 

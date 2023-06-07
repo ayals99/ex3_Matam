@@ -1,7 +1,7 @@
 
 #include <sstream>
 
-#include "HealthPoints.h"
+#include "../UnitTests/HealthPoints.h"
 
 namespace HealthPointsTests {
 

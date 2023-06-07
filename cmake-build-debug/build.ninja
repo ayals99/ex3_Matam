@@ -49,29 +49,23 @@ cmake_ninja_workdir = C$:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/cmake-
 
 build cmake_object_order_depends_target_ex3_Matam: phony || CMakeFiles/ex3_Matam.dir
 
-build CMakeFiles/ex3_Matam.dir/main.cpp.obj: CXX_COMPILER__ex3_Matam_Debug C$:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/main.cpp || cmake_object_order_depends_target_ex3_Matam
-  DEP_FILE = CMakeFiles\ex3_Matam.dir\main.cpp.obj.d
+build CMakeFiles/ex3_Matam.dir/ex3_master_from_github/not_main.cpp.obj: CXX_COMPILER__ex3_Matam_Debug C$:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/ex3_master_from_github/not_main.cpp || cmake_object_order_depends_target_ex3_Matam
+  DEP_FILE = CMakeFiles\ex3_Matam.dir\ex3_master_from_github\not_main.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++14
   OBJECT_DIR = CMakeFiles\ex3_Matam.dir
-  OBJECT_FILE_DIR = CMakeFiles\ex3_Matam.dir
+  OBJECT_FILE_DIR = CMakeFiles\ex3_Matam.dir\ex3_master_from_github
 
-build CMakeFiles/ex3_Matam.dir/HealthPointsExampleTest.cpp.obj: CXX_COMPILER__ex3_Matam_Debug C$:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/HealthPointsExampleTest.cpp || cmake_object_order_depends_target_ex3_Matam
-  DEP_FILE = CMakeFiles\ex3_Matam.dir\HealthPointsExampleTest.cpp.obj.d
+build CMakeFiles/ex3_Matam.dir/ex3_master_from_github/HealthPointsExampleTest.cpp.obj: CXX_COMPILER__ex3_Matam_Debug C$:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/ex3_master_from_github/HealthPointsExampleTest.cpp || cmake_object_order_depends_target_ex3_Matam
+  DEP_FILE = CMakeFiles\ex3_Matam.dir\ex3_master_from_github\HealthPointsExampleTest.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++14
   OBJECT_DIR = CMakeFiles\ex3_Matam.dir
-  OBJECT_FILE_DIR = CMakeFiles\ex3_Matam.dir
+  OBJECT_FILE_DIR = CMakeFiles\ex3_Matam.dir\ex3_master_from_github
 
-build CMakeFiles/ex3_Matam.dir/QueueExampleTests.cpp.obj: CXX_COMPILER__ex3_Matam_Debug C$:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/QueueExampleTests.cpp || cmake_object_order_depends_target_ex3_Matam
-  DEP_FILE = CMakeFiles\ex3_Matam.dir\QueueExampleTests.cpp.obj.d
+build CMakeFiles/ex3_Matam.dir/ex3_master_from_github/QueueExampleTests.cpp.obj: CXX_COMPILER__ex3_Matam_Debug C$:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/ex3_master_from_github/QueueExampleTests.cpp || cmake_object_order_depends_target_ex3_Matam
+  DEP_FILE = CMakeFiles\ex3_Matam.dir\ex3_master_from_github\QueueExampleTests.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++14
   OBJECT_DIR = CMakeFiles\ex3_Matam.dir
-  OBJECT_FILE_DIR = CMakeFiles\ex3_Matam.dir
-
-build CMakeFiles/ex3_Matam.dir/HealthPoints.cpp.obj: CXX_COMPILER__ex3_Matam_Debug C$:/Users/ayals/OneDrive/Documents/GitHub/ex3_Matam/HealthPoints.cpp || cmake_object_order_depends_target_ex3_Matam
-  DEP_FILE = CMakeFiles\ex3_Matam.dir\HealthPoints.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++14
-  OBJECT_DIR = CMakeFiles\ex3_Matam.dir
-  OBJECT_FILE_DIR = CMakeFiles\ex3_Matam.dir
+  OBJECT_FILE_DIR = CMakeFiles\ex3_Matam.dir\ex3_master_from_github
 
 
 # =============================================================================
@@ -81,7 +75,7 @@ build CMakeFiles/ex3_Matam.dir/HealthPoints.cpp.obj: CXX_COMPILER__ex3_Matam_Deb
 #############################################
 # Link the executable ex3_Matam.exe
 
-build ex3_Matam.exe: CXX_EXECUTABLE_LINKER__ex3_Matam_Debug CMakeFiles/ex3_Matam.dir/main.cpp.obj CMakeFiles/ex3_Matam.dir/HealthPointsExampleTest.cpp.obj CMakeFiles/ex3_Matam.dir/QueueExampleTests.cpp.obj CMakeFiles/ex3_Matam.dir/HealthPoints.cpp.obj
+build ex3_Matam.exe: CXX_EXECUTABLE_LINKER__ex3_Matam_Debug CMakeFiles/ex3_Matam.dir/ex3_master_from_github/not_main.cpp.obj CMakeFiles/ex3_Matam.dir/ex3_master_from_github/HealthPointsExampleTest.cpp.obj CMakeFiles/ex3_Matam.dir/ex3_master_from_github/QueueExampleTests.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ex3_Matam.dir

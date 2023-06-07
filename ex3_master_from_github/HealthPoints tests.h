@@ -6,7 +6,7 @@
 #define EX3_MATAM_HEALTPOINTS_TESTS_H
 
 #include <iostream>
-#include "HealthPoints.h"
+#include "../UnitTests/HealthPoints.h"
 #include <sstream>
 
 namespace HealthPointsTests {
