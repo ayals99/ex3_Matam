@@ -11,9 +11,7 @@ static const int EMPTY = 0;
  */
 template<class T>
 class Queue {
-
 private:
-
     class Node {
     private:
         T* m_item;
@@ -87,7 +85,6 @@ private:
             return *this;
         }
     };
-
     Node *m_head;
     int m_size;
 
@@ -176,7 +173,7 @@ public:
     class ConstIterator {
     private:
         Node *m_pointer;
-        friend class Queue<T>; // TODO: Check if this is needed
+//        friend class Queue<T>; // TODO: Check if this is needed
     public:
         /** Constructor for ConstIterator */
         explicit ConstIterator(Node* pointer) {
@@ -239,7 +236,7 @@ public:
     class Iterator {
     private:
         Node *m_pointer;
-        friend class Queue<T>; // TODO: Check if this is needed
+//        friend class Queue<T>; // TODO: Check if this is needed
 
     public:
         /** Constructor for Iterator*/
