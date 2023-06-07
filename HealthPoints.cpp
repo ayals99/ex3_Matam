@@ -70,8 +70,6 @@ HealthPoints& HealthPoints::operator=(const HealthPoints& other) {
     if(&other == this){
         return *this;
     }
-    assert(other.m_maxHealth >= MINIMAL_HEALTH);
-    assert(other.m_currentHealth >= MINIMAL_HEALTH);
 
     m_currentHealth = other.m_currentHealth;
     m_maxHealth = other.m_maxHealth;
