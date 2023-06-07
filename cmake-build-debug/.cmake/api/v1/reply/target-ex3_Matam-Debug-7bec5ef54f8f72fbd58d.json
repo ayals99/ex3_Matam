@@ -105,19 +105,19 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "ex3_master_from_github/not_main.cpp",
+			"path" : "The_Given_Tests/not_main.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "ex3_master_from_github/HealthPointsExampleTest.cpp",
+			"path" : "The_Given_Tests/HealthPointsExampleTest.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "ex3_master_from_github/QueueExampleTests.cpp",
+			"path" : "The_Given_Tests/QueueExampleTests.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
