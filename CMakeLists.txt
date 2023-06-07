@@ -3,4 +3,4 @@ project(ex3_Matam)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ex3_Matam ex3_master_from_github/not_main.cpp ex3_master_from_github/HealthPointsExampleTest.cpp ex3_master_from_github/QueueExampleTests.cpp)
+add_executable(ex3_Matam The_Given_Tests/not_main.cpp The_Given_Tests/HealthPointsExampleTest.cpp The_Given_Tests/QueueExampleTests.cpp)
