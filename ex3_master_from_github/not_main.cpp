@@ -17,8 +17,8 @@
 
 
 #include "TestUtils.h"
-#include "../UnitTests/HealthPoints.h"
-#include "../UnitTests/Queue.h"
+#include "../../../../../CLionProjects/just one prblem/HealthPoints.h"
+#include "../../../../../CLionProjects/just one prblem/Queue.h"
 
 namespace HealthPointsTests {
     bool testInitialization();

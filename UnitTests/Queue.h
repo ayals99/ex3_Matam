@@ -101,22 +101,31 @@ public:
      */
     Queue() : m_head(nullptr), m_size(EMPTY) {}
 
-    /**
-     * @brief: Copy Constructor for Queue
-     * @param: other queue to copy
-     * @return: A new queue with the same items as the "other" queue
-     */
-    // TODO: Write a test that creates two queues, changes one and checks that the other one didn't change
-
     /** Copy constructor for Queue
      * @param: other queue to copy
      *
      * @return: A new queue with the same items as the "other" queue, independent of the "other" queue
      */
     Queue(const Queue& other) : m_head(nullptr), m_size(EMPTY) {
-        for(Queue<T>::ConstIterator it = other.begin(); it != other.end(); ++it) {
-            pushBack(*it);
+        try{
+            for (Queue<T>::ConstIterator it = other.begin(); it != other.end(); ++it) {
+                pushBack(*it);
+            }
         }
+        catch(std::bad_alloc& e){
+            while(m_size > 0){
+                popFront();
+            }
+            throw e;
+        }
+    }
+
+    void setLastNextToNull (Node* head, int size){
+        Node *last = head;
+        for (int i = 0; i < size; i++) {
+            last = last->getPointerToNext();
+        }
+        last->setPointerToNext(nullptr);
     }
 
     /** Assignment operator for Queue
@@ -129,66 +138,73 @@ public:
      *
      * @return: A new queue with the same items as the "other" queue
      */
-    void setLastNextToNull (Node* head, int size){
-        Node *last = head;
-        for (int i = 0; i < (size - 1); i++) {
-            last = last->getPointerToNext();
+    Queue<T>& operator=(const Queue&other) {
+        if(this == &other) {
+            return *this;
         }
-        last->setPointerToNext(nullptr);
+        int successfulAlloc = 0;
+        int originalSize = m_size;
+        try {
+            for(Queue<T>::ConstIterator it = other.begin(); it != other.end(); ++it) {
+                pushBack(*it);
+                successfulAlloc++;
+            }
+            for(int i = 0; i < originalSize; ++i) {
+                popFront();
+            }
+        } catch (const std::bad_alloc& e) {
+            Node *originalHead = (originalSize == 0) ? nullptr : m_head;
+            if(originalSize != 0) {// Save the original queue's data
+                // Find the pointer to the node where the nodes we successfully allocated start
+                Node *lastOfOriginalNodes = m_head;
+                Node *startOfNewQueue;
+                for (int i = 0; i < originalSize - 1; ++i) {
+                    lastOfOriginalNodes = lastOfOriginalNodes->getPointerToNext();
+                }
+                startOfNewQueue = lastOfOriginalNodes->getPointerToNext();
+                lastOfOriginalNodes->setPointerToNext(nullptr);
+                m_head = startOfNewQueue;
+            }
+
+            // Delete the nodes we successfully allocated
+            for(int i = 0; i < successfulAlloc; ++i) {
+                popFront();
+            }
+            // Return the original queue to its original state
+            m_head = originalHead;
+
+            // Assigning nullptr to the m_next of the last node in the original queue
+//           setLastNextToNull(m_head, originalSize);
+            throw e;
+        }
+        return *this;
     }
 
-    Queue<T>& operator=(const Queue&other) {
-       if(this == &other) {
-           return *this;
-       }
-       int successfulAlloc = 0;
-       int originalSize = m_size;
-       try {
-           for(Queue<T>::ConstIterator it = other.begin(); it != other.end(); ++it) {
-               pushBack(*it);
-               successfulAlloc++;
-           }
-           for(int i = 0; i < originalSize; i++) {
-               popFront();
-           }
-       } catch (std::bad_alloc& e) {
-           // TODO: find a way to delete the nodes that were created
-
-           // Save the original queue's data
-           Node* originalHead = m_head;
-           int tempOriginalSize = originalSize;
-
-           // Find the pointer to the node where the nodes we successfully allocated start
-           Node* StartOfNewQueue = m_head;
-           while(tempOriginalSize > 0) {
-               StartOfNewQueue = StartOfNewQueue->getPointerToNext();
-               tempOriginalSize--;
-           }
-           // Delete the nodes we successfully allocated
-           m_head = StartOfNewQueue;
-           for(int i = 0; i < successfulAlloc; i++) {
-               popFront();
-           }
-           // Return the original queue to its original state
-           m_head = originalHead;
-
-           // Assigning nullptr to the m_next of the last node in the original queue
-           setLastNextToNull(m_head, originalSize);
-
-           throw e;
-       }
-        return *this;
+    ~Queue() {
+        while(m_size > 0) {
+            popFront();
+        }
     }
 
     class ConstIterator {
     private:
-        Node *m_pointer; // TODO: Check if const is needed
+        Node *m_pointer;
         friend class Queue<T>; // TODO: Check if this is needed
     public:
-        explicit ConstIterator(Node *pointer) {
+        /** Constructor for ConstIterator */
+        explicit ConstIterator(Node* pointer) {
             m_pointer = pointer;
         }
 
+        /** Assignment operator for ConstIterator */
+        ConstIterator& operator=(const ConstIterator& other) {
+            if(this != &other) {
+                m_pointer = other.m_pointer;
+            }
+            return *this;
+        }
+
+        /**Exception for invalid operation*/
         class InvalidOperation {};
 
         /**
@@ -203,21 +219,13 @@ public:
             return m_pointer->getReferenceToItem();
         }
 
-        void operator++() { // TODO: Check if const is needed after
+        /** Operator implementations */
+        void operator++() {
             if (this->m_pointer == nullptr) {
                 throw InvalidOperation();
             }
             m_pointer = m_pointer->getPointerToNext();
         }
-
-        // TODO: Check if ++ from the right is needed
-//        ConstIterator operator++(int) { // TODO: Check what return value should be
-//            if (this->m_pointer == nullptr) {
-//                throw InvalidOperation();
-//            }
-//            ConstIterator tempIterator(m_pointer);
-//            m_pointer = m_pointer->getPointerToNext();
-//        }
 
         bool operator==(const ConstIterator &other) const {
             return m_pointer == other.m_pointer;
@@ -247,16 +255,25 @@ public:
         friend class Queue<T>; // TODO: Check if this is needed
 
     public:
+        /** Constructor for Iterator*/
         explicit Iterator(Node *pointer) {
             m_pointer = pointer;
         }
 
+        /** Assignment operator for Iterator */
+        Iterator& operator=(Iterator& other){
+            if(this != &other) {
+                m_pointer = other.m_pointer;
+            }
+            return *this;
+        }
+
+        /**Exception for invalid operation*/
         class InvalidOperation {
         };
 
         /**
          * @brief: dereference operator for Iterator
-         * @param: *
          * @return: pointer to the node
          */
         T& operator*() {
@@ -266,6 +283,7 @@ public:
             return m_pointer->getReferenceToItem();
         }
 
+        /** Operator implementations */
         Iterator& operator++() {
             if (this->m_pointer == nullptr) {
                 throw InvalidOperation();
@@ -273,16 +291,6 @@ public:
             m_pointer = m_pointer->getPointerToNext();
             return *this;
         }
-
-        // TODO: Check if ++ from the right is needed
-//        Iterator& operator++(int)  {
-//            if (this->m_pointer == nullptr) {
-//                throw InvalidOperation();
-//            }
-//            Iterator tempIterator(m_pointer);
-//            m_pointer = m_pointer->getPointerToNext();
-//            return &tempIterator;
-//        }
 
         bool operator==(const Iterator &other) const {
             return m_pointer == other.m_pointer;
@@ -305,7 +313,6 @@ public:
             return *this;
         }
     };
-
 
     Iterator begin() {
         return Iterator(m_head);
@@ -349,21 +356,21 @@ public:
      * @note: the item is copied, not inserted itself into the queue
      */
     Queue<T>& pushBack(const T& toInsert) {
+        Node* nodeToPush;
         try{
-            Node* nodeToPush = new Node(toInsert);
-            if (this->m_size == EMPTY) {
-                m_head = nodeToPush;
-                m_size += 1;
-            }
-            else {
-                Node *lastElement = findLast(*this);
-                insertAfter(lastElement, nodeToPush);
-                m_size += 1;
-            }
+            nodeToPush = new Node(toInsert);
         }
         catch(std::bad_alloc& e){
             throw e;
         }
+        if (this->m_size == EMPTY) {
+            m_head = nodeToPush;
+        }
+        else {
+            Node *lastElement = findLast(*this);
+            insertAfter(lastElement, nodeToPush);
+        }
+        m_size += 1;
         return *this;
     }
 

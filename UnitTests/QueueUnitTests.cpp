@@ -295,7 +295,8 @@ TEST_CASE("Queue Advanced")
         REQUIRE_THROWS_AS(q2.pushBack(c), std::bad_alloc);
 
         ControlledAllocer::allowedAllocs = 5;
-
+        REQUIRE(q2.size() == 0);
+        REQUIRE(q1.size() == 10);
         REQUIRE_THROWS_AS(q2 = q1, std::bad_alloc);
 
         auto newCopyBadAllocerQ = [](Queue<ControlledAllocer> q)

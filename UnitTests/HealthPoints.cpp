@@ -5,21 +5,12 @@ int adjustHealth(int currentHealthPoints, int maxHealthPoints);
 /** Arithmetic Operators implementation*/
 
 /** Implementing + operator */
-
-//HealthPoints& HealthPoints::operator+(const HealthPoints& other) {
-//    m_currentHealth += other.m_currentHealth;
-//    m_currentHealth = adjustHealth(m_currentHealth, m_maxHealth);
-//    return *this;
-//}
-
 HealthPoints HealthPoints::operator+(int pointsToAdd){
-    // TODO: check if this is correct, might need to create a new instance of HealthPoints and return the while instance and not a reference
     HealthPoints healthPointsResult = *this;
     healthPointsResult += pointsToAdd;
     return healthPointsResult;
 }
 
-//TODO: check if this is correct
 HealthPoints operator+(int pointsToAdd, HealthPoints& healthPoints){
     HealthPoints healthPointsResult = healthPoints;
     healthPointsResult += pointsToAdd;
@@ -27,7 +18,6 @@ HealthPoints operator+(int pointsToAdd, HealthPoints& healthPoints){
 }
 
 /** Implementing += operator */
-
 HealthPoints& HealthPoints::operator+=(int valueToIncrease){
     m_currentHealth += valueToIncrease;
     m_currentHealth = adjustHealth(m_currentHealth, m_maxHealth);

@@ -1,5 +1,5 @@
 
-#include "../UnitTests/Queue.h"
+#include "../../../../../CLionProjects/just one prblem/Queue.h"
 #include "iostream"
 
 #define AGREGATE_TEST_RESULT(res, cond) (res) = ((res) && (cond))

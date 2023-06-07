@@ -1,7 +1,7 @@
 
 #include <sstream>
 
-#include "../UnitTests/HealthPoints.h"
+#include "../../../../../CLionProjects/just one prblem/HealthPoints.h"
 
 namespace HealthPointsTests {
 
