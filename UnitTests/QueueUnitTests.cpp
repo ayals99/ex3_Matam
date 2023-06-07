@@ -323,10 +323,13 @@ TEST_CASE("Queue Advanced")
         shortQ.front().someInteger = -1;
 
         ControlledAllocer::allowedAllocs = 2;
-        REQUIRE_THROWS_AS(q1 = shortQ, std::bad_alloc); // Use failing assainment operator
+        REQUIRE_THROWS_AS(q1 = shortQ, std::bad_alloc); // Use failing assignment operator
+
         REQUIRE(q1.size() == 10); // Check that q1 wasn't changes
         
         REQUIRE(q1.front().someInteger == 666); // Check that q1 wasn't changes
+
+        REQUIRE(q1.size() == 10);
 
         int counter = 0;
         for (ControlledAllocer& data: q1){
