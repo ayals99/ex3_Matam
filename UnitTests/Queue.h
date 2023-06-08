@@ -184,7 +184,8 @@ public:
 
     class ConstIterator {
     private:
-        Node const* m_pointer; // TODO: Check if need the const here
+        Node const* m_pointer; // const here isn't necessary since operator * returns const T&, but we'll keep it
+
     public:
         /** Constructor for ConstIterator */
         explicit ConstIterator(Node* pointer) {
