@@ -184,7 +184,7 @@ public:
 
     class ConstIterator {
     private:
-        Node const* m_pointer; // TODO: Check if need the add const here
+        Node const* m_pointer; // TODO: Check if need the const here
     public:
         /** Constructor for ConstIterator */
         explicit ConstIterator(Node* pointer) {
@@ -313,7 +313,7 @@ public:
         return Iterator(m_head);
     }
 
-    ConstIterator begin() const { // TODO: Check if "const" should be removed
+    ConstIterator begin() const {
         return ConstIterator(m_head);
     }
 
@@ -327,7 +327,7 @@ public:
     /** end() function for const iterators
     * @return reference to the one after the last element of the queue, but const so can't change the value
     */
-    ConstIterator end() const { // TODO: Check if "const" should be removed
+    ConstIterator end() const {
         return ConstIterator(nullptr);
     }
 

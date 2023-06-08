@@ -50,7 +50,7 @@ HealthPoints& HealthPoints::operator=(const HealthPoints& other) {
 }
 
 HealthPoints& HealthPoints::operator=(const int healthToAssign){
-    if(healthToAssign < 0){
+    if(healthToAssign < MINIMAL_HEALTH){ // MINIMAL_HEALTH is a const int defined to zero in HealthPoints.h
         throw HealthPoints::InvalidArgument();
     }
     m_currentHealth = healthToAssign;
@@ -120,8 +120,12 @@ std::ostream& operator<<(std::ostream& os, const HealthPoints& healthPoints){
     return os;
 }
 
+/** adjustHealth() makes sure that m_currentHealth:
+ * (1) doesn't exceed m_maxHealth
+ * (2) doesn't go below zero
+ * */
 int adjustHealth(int currentHealthPoints, int maxHealthPoints){
-    if(currentHealthPoints < MINIMAL_HEALTH){
+    if(currentHealthPoints < MINIMAL_HEALTH){ // MINIMAL_HEALTH is a const int defined to zero in HealthPoints.h
         return MINIMAL_HEALTH;
     }
     else if(currentHealthPoints > maxHealthPoints){

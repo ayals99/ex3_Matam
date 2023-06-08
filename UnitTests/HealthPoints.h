@@ -42,25 +42,25 @@ public:
      */
     ~HealthPoints() = default;
 
-    /** Arithmetic Operators implementation*/
+    /** Arithmetic Operators Declarations*/
 
-    /** Implementing + operator */
+    /** Declaring + operator */
     HealthPoints operator+(int pointsToAdd);
 
-    /** Implementing += operator */
+    /** Declaring += operator */
     HealthPoints& operator+=(int valueToIncrease);
 
-    /** Implementing - operator */
+    /** Declaring - operator */
     HealthPoints operator-(int pointsToSubtract);
 
-    /** Implementing -= operator */
+    /** Declaring -= operator */
     HealthPoints& operator-=(int valueToDecrease);
 
-    /** Assignment Operators implementation*/
+    /** Assignment Operators Declaration*/
     HealthPoints& operator=(const HealthPoints& other);
     HealthPoints& operator=(int healthToAssign);
 
-    /** Boolean Operators implementation*/
+    /** Boolean Operators Declarations*/
 
     /** Declaring == operator */
     bool operator==(const HealthPoints& other) const;
@@ -87,7 +87,6 @@ public:
     /** Declaring >= operator */
     bool operator>=(const HealthPoints& other) const;
     friend bool operator>=(int number, const HealthPoints& other);
-
 
     /** Friending << operator */
     friend std::ostream& operator<<(std::ostream& os, const HealthPoints& healthPoints);
