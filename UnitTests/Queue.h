@@ -85,6 +85,7 @@ private:
             return *this;
         }
     };
+
     Node *m_head;
     int m_size;
 
@@ -103,6 +104,7 @@ public:
     Queue(const Queue& other) : m_head(nullptr), m_size(EMPTY) {
         try{
             for (Queue<T>::ConstIterator it = other.begin(); it != other.end(); ++it) {
+                // Since pushback creates a new node from the item, even though we use a constIterator, the created Queue should not be const.
                 pushBack(*it);
             }
         }
@@ -117,53 +119,63 @@ public:
     /** Assignment operator for Queue
      * @param: other queue to copy
      *
-     * @constraints: In case of fail of alloc, need to throw std::bad_alloc and leave the original queue as is
-     * @constraints: In case of self assignment, do nothing
+     * @note: In case of self assignment, do nothing
+     * @constraints: In case of alloc fail ,need to throw std::bad_alloc and leave the original queue unchanged
      * @constraints: The nodes that are created when initializing the temporary queue should not be deleted, but should
      * be inserted to the new queue we are creating
-     * @return: A new queue with the same items as the "other" queue
+     *
+     * @explain: We try to add all "other" queue's items to the end of the original queue with pushBack().
+     *           If all allocations succeed, we remove the original queue's data with popFront().
+     *           If an allocation fails, we remove the additional nodes we successfully allocated with popFront()
+     *           and leave the original queue's data untouched.
+     *
+     * @return: Reference to a new queue with the same items as the "other" queue, independent of the "other" queue
      */
-    Queue<T>& operator=(const Queue&other) {
+    Queue<T>& operator=(const Queue& other) {
         if(this == &other) {
             return *this;
         }
         int successfulAllocCount = 0;
         int originalSize = m_size;
+        Node* originalHead = (originalSize == 0) ? nullptr : m_head;
         try {
+            // Try allocating all the nodes (and items) of the "other" queue to the end of the original queue
             for(Queue<T>::ConstIterator it = other.begin(); it != other.end(); ++it) {
                 pushBack(*it);
                 successfulAllocCount++;
             }
+            // Remove the original queue's data if all new node (and item) allocations succeeded
             for(int i = 0; i < originalSize; ++i) {
                 popFront();
             }
         }
         catch (const std::bad_alloc& e) {
-            Node *originalHead = (originalSize == 0) ? nullptr : m_head;
-            if(originalSize != 0) { // Save the original queue's data
+            if(originalSize != 0) { //  If the original queue had data then we need to leave that data untouched
                 // Find the pointer to the node where the nodes we successfully allocated start
-                Node *lastOfOriginalNodes = m_head;
-                Node *startOfNewQueue;
+                Node* lastOfOriginalNodes = m_head;
                 for (int i = 0; i < originalSize - 1; ++i) {
                     lastOfOriginalNodes = lastOfOriginalNodes->getPointerToNext();
                 }
-                // Save the pointer to the first node of the new queue we tried to add
-                startOfNewQueue = lastOfOriginalNodes->getPointerToNext();
-                // Set the m_next in the last node of the original queue to "nullptr"
+                // Save the pointer to the first of the additional nodes we successfully allocated:
+                Node* startOfAddedNodes = lastOfOriginalNodes->getPointerToNext();
+                // Set the m_next in the last node of the original queue to "nullptr",
+                // to mark the end of the original queue:
                 lastOfOriginalNodes->setPointerToNext(nullptr);
-                m_head = startOfNewQueue;
+                // Temporarily set the m_head to the first node of the additional nodes
+                // in order to later remove them by using popFront():
+                m_head = startOfAddedNodes;
             }
-            // Delete the nodes we successfully allocated
-            for(int i = 0; i < successfulAllocCount; ++i) {
+            for(int i = 0; i < successfulAllocCount; ++i) { // Remove the additional nodes we successfully allocated
                 popFront();
             }
-            // Return the original queue to its original state
+            // Restore the original queue to its untouched state
             m_head = originalHead;
             throw e;
         }
         return *this;
     }
 
+    /** Destructor for Queue*/
     ~Queue() {
         while(m_size > 0) {
             popFront();
@@ -172,8 +184,7 @@ public:
 
     class ConstIterator {
     private:
-        Node *m_pointer;
-//        friend class Queue<T>; // TODO: Check if this is needed
+        Node const* m_pointer; // TODO: Check if need the add const here
     public:
         /** Constructor for ConstIterator */
         explicit ConstIterator(Node* pointer) {
@@ -235,8 +246,7 @@ public:
 
     class Iterator {
     private:
-        Node *m_pointer;
-//        friend class Queue<T>; // TODO: Check if this is needed
+        Node* m_pointer;
 
     public:
         /** Constructor for Iterator*/
@@ -255,9 +265,11 @@ public:
         /**Exception for invalid operation*/
         class InvalidOperation {};
 
+        /** Operator implementations */
+
         /**
-         * @brief: dereference operator for Iterator
-         * @return: pointer to the node
+         * Dereference operator for Iterator
+         * @return: reference to m_item
          */
         T& operator*() {
             if (this->m_pointer == nullptr) {
@@ -266,7 +278,7 @@ public:
             return m_pointer->getReferenceToItem();
         }
 
-        /** Operator implementations */
+
         Iterator& operator++() {
             if (this->m_pointer == nullptr) {
                 throw InvalidOperation();
@@ -283,7 +295,7 @@ public:
             return m_pointer != other.m_pointer;
         }
 
-        Iterator &operator+(int valueToIncrement) {
+        Iterator& operator+(int valueToIncrement) {
             Node *current = this->m_pointer;
             if (valueToIncrement < 0) {
                 throw InvalidOperation();
@@ -301,7 +313,7 @@ public:
         return Iterator(m_head);
     }
 
-    ConstIterator begin() const { // TODO: CHeck if const can be removed
+    ConstIterator begin() const { // TODO: Check if "const" should be removed
         return ConstIterator(m_head);
     }
 
@@ -313,23 +325,25 @@ public:
     }
 
     /** end() function for const iterators
-    * @return reference to the one after the last element of the queue
+    * @return reference to the one after the last element of the queue, but const so can't change the value
     */
-    ConstIterator end() const { // TODO: CHeck if const can be removed
+    ConstIterator end() const { // TODO: Check if "const" should be removed
         return ConstIterator(nullptr);
     }
 
-    Node* findLast(Queue<T> &queue) {
+    // Used in pushBack function
+    Node* findLastNode(Queue<T>& queue) {
         if (queue.m_size == EMPTY) {
             return m_head;
         }
-        Node *last = queue.m_head;
+        Node* last = queue.m_head;
         while (last->Node::getPointerToNext() != nullptr) {
             last = last->Node::getPointerToNext();
         }
         return last;
     }
 
+    // Used in pushBack function
     void insertAfter(Node *firstNode, Node *secondNode) {
         firstNode->Node::setPointerToNext(secondNode);
     }
@@ -353,7 +367,7 @@ public:
             m_head = nodeToPush;
         }
         else {
-            Node *lastElement = findLast(*this);
+            Node* lastElement = findLastNode(*this);
             insertAfter(lastElement, nodeToPush);
         }
         m_size += 1;
@@ -407,9 +421,6 @@ public:
         return m_size;
     }
 };
-
-template<class T>
-std::ostream &operator<<(std::ostream &os, Queue<T> queue);
 
 template<typename T, typename FUNC>
 Queue<T> filter(const Queue<T>& queueToFilter, FUNC filterFunction) {
