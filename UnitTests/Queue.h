@@ -223,7 +223,7 @@ public:
             m_pointer = m_pointer->getPointerToNext();
         }
 
-        bool operator==(const ConstIterator &other) const {
+        bool operator==(const ConstIterator &other) const { // Is not needed for this exercise
             return m_pointer == other.m_pointer;
         }
 
@@ -231,7 +231,7 @@ public:
             return m_pointer != other.m_pointer;
         }
 
-        ConstIterator& operator+(int valueToIncrement) const{
+        ConstIterator& operator+(int valueToIncrement) const{ // Is not needed for this exercise
             Node *current = this->m_pointer;
             if (valueToIncrement < 0) {
                 throw InvalidOperation();
@@ -288,7 +288,7 @@ public:
             return *this;
         }
 
-        bool operator==(const Iterator &other) const {
+        bool operator==(const Iterator &other) const { // Is not needed for this exercise
             return m_pointer == other.m_pointer;
         }
 
@@ -296,7 +296,7 @@ public:
             return m_pointer != other.m_pointer;
         }
 
-        Iterator& operator+(int valueToIncrement) {
+        Iterator& operator+(int valueToIncrement) { // Is not needed for this exercise
             Node *current = this->m_pointer;
             if (valueToIncrement < 0) {
                 throw InvalidOperation();
@@ -442,8 +442,8 @@ Queue<T> filter(const Queue<T>& queueToFilter, FUNC filterFunction) {
 template<typename T, typename FUNC>
 void transform(Queue<T>& queueToTransform, FUNC transformFunction) {
     for (typename Queue<T>::Iterator i = queueToTransform.begin(); i != queueToTransform.end(); ++i) {
-        T& itemPointer = *i;
-        transformFunction(itemPointer);
+        T& itemReference = *i;
+        transformFunction(itemReference);
     }
 }
 
