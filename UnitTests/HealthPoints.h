@@ -45,67 +45,71 @@ public:
     /** Arithmetic Operators Declarations*/
 
     /** Declaring + operator */
-    HealthPoints operator+(int pointsToAdd);
+    HealthPoints operator+(int);
 
     /** Declaring += operator */
-    HealthPoints& operator+=(int valueToIncrease);
+    HealthPoints& operator+=(int);
 
     /** Declaring - operator */
-    HealthPoints operator-(int pointsToSubtract);
+    HealthPoints operator-(int);
 
     /** Declaring -= operator */
-    HealthPoints& operator-=(int valueToDecrease);
+    HealthPoints& operator-=(int);
 
     /** Assignment Operators Declaration*/
-    HealthPoints& operator=(const HealthPoints& other);
-    HealthPoints& operator=(int healthToAssign);
+    HealthPoints& operator=(const HealthPoints&);
+    HealthPoints& operator=(int);
 
     /** Boolean Operators Declarations*/
 
     /** Declaring == operator */
-    bool operator==(const HealthPoints& other) const;
-    bool operator==(int value) const;
-    friend bool operator==(int value, const HealthPoints& healthPoints);
+    bool operator==(const HealthPoints&) const;
+    bool operator==(int) const;
+    friend bool operator==(int, const HealthPoints&);
 
     /** Declaring != operator */
-    bool operator!=(const HealthPoints& other) const;
-    bool operator!=(int value) const;
-    friend bool operator!=(int value, const HealthPoints& healthPoints);
+    bool operator!=(const HealthPoints&) const;
+    bool operator!=(int) const;
+    friend bool operator!=(int, const HealthPoints&);
 
     /** Declaring < operator */
-    bool operator<(const HealthPoints& other) const;
-    friend bool operator<(int number, const HealthPoints& healthPoints);
+    bool operator<(const HealthPoints&) const;
+    bool operator<(int) const;
+    friend bool operator<(int, const HealthPoints&);
 
     /** Declaring > operator */
-    bool operator>(const HealthPoints& other) const;
-    friend bool operator>(int number, const HealthPoints& healthPoints);
+    bool operator>(const HealthPoints&) const;
+    bool operator>(int) const;
+    friend bool operator>(int, const HealthPoints&);
 
     /** Declaring <= operator */
-    bool operator<=(const HealthPoints& other) const;
-    friend bool operator<=(int number, const HealthPoints& healthPoints);
+    bool operator<=(const HealthPoints&) const;
+    bool operator<=(int) const;
+    friend bool operator<=(int, const HealthPoints&);
 
     /** Declaring >= operator */
-    bool operator>=(const HealthPoints& other) const;
-    friend bool operator>=(int number, const HealthPoints& other);
+    bool operator>=(const HealthPoints&) const;
+    bool operator>=(int) const;
+    friend bool operator>=(int, const HealthPoints&);
 
     /** Friending << operator */
-    friend std::ostream& operator<<(std::ostream& os, const HealthPoints& healthPoints);
+    friend std::ostream& operator<<(std::ostream&, const HealthPoints&);
 };
 
-HealthPoints operator+(int pointsToSub, HealthPoints& healthPoints);
+HealthPoints operator+(const int, const HealthPoints&);
 
-bool operator==(int value, const HealthPoints& healthPoints);
+bool operator==(const int, const HealthPoints&);
 
-bool operator!=(int,const HealthPoints&);
+bool operator!=(const int, const HealthPoints&);
 
-bool operator<(int, const HealthPoints&);
+bool operator<(const int, const HealthPoints&);
 
-bool operator<=(int, const HealthPoints&);
+bool operator<=(const int, const HealthPoints&);
 
-bool operator>(int, const HealthPoints&);
+bool operator>(const int, const HealthPoints&);
 
-bool operator>=(int, const HealthPoints&);
+bool operator>=(const int, const HealthPoints&);
 
-std::ostream &operator<<(std::ostream& os, const HealthPoints& healthPoints);
+std::ostream &operator<<(std::ostream&, const HealthPoints&);
 
 #endif

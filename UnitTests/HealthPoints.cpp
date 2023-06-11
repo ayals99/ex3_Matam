@@ -11,14 +11,14 @@ HealthPoints HealthPoints::operator+(int pointsToAdd){
     return healthPointsResult;
 }
 
-HealthPoints operator+(int pointsToAdd, HealthPoints& healthPoints){
+HealthPoints operator+(const int pointsToAdd, const HealthPoints& healthPoints){
     HealthPoints healthPointsResult = healthPoints;
     healthPointsResult += pointsToAdd;
     return healthPointsResult;
 }
 
 /** Implementing += operator */
-HealthPoints& HealthPoints::operator+=(int valueToIncrease){
+HealthPoints& HealthPoints::operator+=(const int valueToIncrease){
     m_currentHealth += valueToIncrease;
     m_currentHealth = adjustHealth(m_currentHealth, m_maxHealth);
     return *this;
@@ -64,7 +64,7 @@ HealthPoints& HealthPoints::operator=(const int healthToAssign){
 bool HealthPoints::operator==(const HealthPoints& other) const{
     return (m_currentHealth == other.m_currentHealth);
 }
-bool HealthPoints::operator==(int value) const {
+bool HealthPoints::operator==(const int value) const {
     return (m_currentHealth == value);
 }
 bool operator==(const int value, const HealthPoints& healthPoints){
@@ -89,6 +89,9 @@ bool operator<(const int number, const HealthPoints& healthPoints){
 bool HealthPoints::operator<(const HealthPoints& other) const{
     return (m_currentHealth < other.m_currentHealth);
 }
+bool HealthPoints::operator<(const int value) const{
+    return (m_currentHealth < value);
+}
 
 /** Implementing > operator */
 bool operator>(const int number, const HealthPoints& healthPoints){
@@ -96,6 +99,9 @@ bool operator>(const int number, const HealthPoints& healthPoints){
 }
 bool HealthPoints::operator>(const HealthPoints& other) const{
     return (m_currentHealth > other.m_currentHealth);
+}
+bool HealthPoints::operator>(const int value) const{
+    return (m_currentHealth > value);
 }
 
 /** Implementing <= operator */
@@ -105,13 +111,19 @@ bool HealthPoints::operator<=(const HealthPoints& other) const{
 bool operator<=(const int number, const HealthPoints& healthPoints){
     return (number <= healthPoints.m_currentHealth);
 }
+bool HealthPoints::operator<=(const int value) const{
+    return (m_currentHealth <= value);
+}
 
 /** Implementing >= operator */
 bool HealthPoints::operator>=(const HealthPoints& other) const{
     return (m_currentHealth >= other.m_currentHealth);
 }
-bool operator>=(int number, const HealthPoints& other) {
+bool operator>=(const int number, const HealthPoints& other) {
     return (number >= other.m_currentHealth);
+}
+bool HealthPoints::operator>=(const int value) const{
+    return (m_currentHealth >= value);
 }
 
 /** operator << implementation*/
@@ -124,7 +136,7 @@ std::ostream& operator<<(std::ostream& os, const HealthPoints& healthPoints){
  * (1) doesn't exceed m_maxHealth
  * (2) doesn't go below zero
  * */
-int adjustHealth(int currentHealthPoints, int maxHealthPoints){
+int adjustHealth(const int currentHealthPoints, const int maxHealthPoints){
     if(currentHealthPoints < MINIMAL_HEALTH){ // MINIMAL_HEALTH is a const int defined to zero in HealthPoints.h
         return MINIMAL_HEALTH;
     }
